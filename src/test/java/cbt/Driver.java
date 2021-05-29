@@ -9,7 +9,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
+import java.net.URL;
 
 public class Driver {
 	static String browser;
@@ -28,6 +32,16 @@ public class Driver {
 				browser = System.getProperty("BROWSER");
 			}
 			switch (browser) {
+				case "remote-chrome":
+					try {
+						URL url = new URL("http://52.91.215.242:4444/wd/hub");
+						DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+						desiredCapabilities.setBrowserName("chrome");
+						driver = new RemoteWebDriver(url, desiredCapabilities);
+					} catch (Exception e){
+						e.printStackTrace();
+					}
+					break;
 			case "chrome":
 				WebDriverManager.chromedriver().setup();
 				driver = new ChromeDriver();
